@@ -1,0 +1,414 @@
+{
+  "name": "AUTO SOCIALS",
+  "nodes": [
+    {
+      "parameters": {
+        "platform": "facebook",
+        "accountId": {
+          "__rl": true,
+          "value": "12626",
+          "mode": "list",
+          "cachedResultName": "Gary Scot Robertson",
+          "cachedResultUrl": "https://backend.blotato.com/v2/accounts/12626"
+        },
+        "postContentText": "={{ $('FB-LnkIn Captions').item.json.message.content.post_text.facebook }}",
+        "postContentMediaUrls": "={{ $json.url }}",
+        "facebookPageId": {
+          "__rl": true,
+          "value": "61579149976302",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@blotato/n8n-nodes-blotato.blotato",
+      "typeVersion": 2,
+      "position": [
+        -320,
+        -288
+      ],
+      "id": "08468ff0-39a9-4af7-8678-b3f7a9467a11",
+      "name": "Facebook post",
+      "retryOnFail": true,
+      "credentials": {
+        "blotatoApi": {
+          "id": "KmZysdJ5MkoN0wEq",
+          "name": "Blotato account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "platform": "linkedin",
+        "accountId": {
+          "__rl": true,
+          "value": "8394",
+          "mode": "list",
+          "cachedResultName": "Jason Dukowski",
+          "cachedResultUrl": "https://backend.blotato.com/v2/accounts/8394"
+        },
+        "postContentText": "={{ $('FB-LnkIn Captions').item.json.message.content.post_text.linkedin }}",
+        "postContentMediaUrls": "={{ $json.url }}",
+        "options": {}
+      },
+      "type": "@blotato/n8n-nodes-blotato.blotato",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        -48
+      ],
+      "id": "e8aa37ab-eede-42eb-b326-d360a0592cdf",
+      "name": "Linkedin post",
+      "retryOnFail": true,
+      "credentials": {
+        "blotatoApi": {
+          "id": "XjeURPOEb0Q1mRxs",
+          "name": "Blotato account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            },
+            {
+              "triggerAtHour": 11
+            },
+            {
+              "triggerAtHour": 13
+            },
+            {
+              "triggerAtHour": 16
+            },
+            {
+              "triggerAtHour": 19
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1680,
+        224
+      ],
+      "id": "761913b3-1e5a-40e8-ba17-b9395ccba4a5",
+      "name": "Schedule Trigger",
+      "notesInFlow": false,
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "resource": "media",
+        "mediaUrl": "={{ $json.url }}"
+      },
+      "type": "@blotato/n8n-nodes-blotato.blotato",
+      "typeVersion": 2,
+      "position": [
+        -576,
+        224
+      ],
+      "id": "69ab446a-cc3c-4962-8e6e-c56372ee9199",
+      "name": "Upload media",
+      "retryOnFail": true,
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "blotatoApi": {
+          "id": "P9Wm5MYgUoheL4ID",
+          "name": "Blotato account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "platform": "twitter",
+        "accountId": {
+          "__rl": true,
+          "value": "9221",
+          "mode": "list",
+          "cachedResultName": "GetBitflow",
+          "cachedResultUrl": "https://backend.blotato.com/v2/accounts/9221"
+        },
+        "postContentText": "={{ $('X Caption').item.json.message.content.post_text.x }}",
+        "postContentMediaUrls": "={{ $json.url }}",
+        "threadInputMethod": "=",
+        "options": {}
+      },
+      "type": "@blotato/n8n-nodes-blotato.blotato",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        224
+      ],
+      "id": "3e817b4f-6ee6-45d5-a50c-2368bc682fbb",
+      "name": "X post",
+      "retryOnFail": true,
+      "alwaysOutputData": false,
+      "credentials": {
+        "blotatoApi": {
+          "id": "25NF86MIdd4CNl0J",
+          "name": "Blotato account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1,
+                3,
+                5
+              ],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1696,
+        -128
+      ],
+      "id": "632c120d-aa5c-4520-aa11-6299a0887f58",
+      "name": "Schedule Trigger2",
+      "notesInFlow": false,
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=SYSTEM ROLE:\nYou are **Bitflow’s Autonomous Social Media Content Creation Agent**.  \nYou speak as the **CEO of Bitflow** — confident, warm, insightful, data-backed, and deeply informed.\n\nYour job is to generate **unique, expert-level Facebook and LinkedIn posts** grounded in Bitflow's mission:  \n**Simplifying and empowering cryptocurrency payments for merchants.**\n\nYou ALWAYS speak in first person plural (“we”, “our”), because you represent Bitflow.\n\nEvery output must follow the correct JSON format.\n\n\nINPUTS PROVIDED:\n\"day_of_week\": {{ $json[\"Day of week\"] }}\n\"time\": {{ $json[\"Readable time\"] }}\n\nThese fields must appear in the final JSON EXACTLY as:\n\n\"day_of_week\": \"{{ $json['Day of week'] }}\",\n\"time\": \"{{ $json['Readable time'] }}\",\n\n\n\nCONTENT STYLE & TONE:\n\nCEO Tone Requirements:\n- Confident but humble authority  \n- Warm, human, strategic  \n- Professional and articulate  \n- Never generic  \n- Never hype or buzzword-heavy  \n- Never salesy  \n- Speak from experience, not theory  \n\nWriting Style Requirements:\n- Clear, direct, polished sentences\n- Insights backed by industry context\n- Smooth flow, natural phrasing\n- Avoid clichés or motivational fluff\n\nYou write like a fintech CEO who understands global commerce, payments, and crypto deeply.\n\n\nCONTENT RATIO:\n80% **Educational**\n20% **Soft promotional (Bitflow-focused)**\n\nRules:\n- If the most recent output was promotional, the next MUST be educational.\n- Educational = insights about the crypto-payments landscape, merchant benefits, global trends.\n- Promotional = subtle mentions of how *we* (Bitflow) solve these problems.\n\n\nDETAILED KNOWLEDGE BASE (EXPANDED FROM PROVIDED DOCUMENT):\n\nUse this to generate rich, accurate, industry-informed content.\n\nABOUT BITFLOW:\n- Bitflow enables businesses to accept cryptocurrency payments easily and securely.\n- We bridge merchants to the global crypto user base without technical complexity.\n- Merchants can receive BTC, ETH, stablecoins, etc., with optional automatic conversion to local currency.\n- No crypto knowledge is required — we handle the heavy lifting.\n\nGLOBAL CRYPTO ADOPTION:\n- 560M+ global crypto users as of 2024.\n- 65% of crypto holders prefer paying with crypto when available.\n- Crypto users often have higher spending power:\n  - Average crypto luxury purchase ≈ $450 (2× higher than typical card purchases).\n- Crypto-friendly businesses expand into a rapidly growing demographic.\n\nWHY MERCHANTS BENEFIT:\n- Lower fees (1–2%) compared to cards (2–4%).\n- No chargebacks — blockchain transactions are final.\n- Reduced fraud exposure across digital goods and high-risk categories.\n- Faster settlement: minutes, not days.\n- Global-friendly: crypto avoids borders, currency exchanges, and delays.\n- Better cash flow due to near-instant finality.\n- Attracts a high-value, tech-forward customer segment.\n\nBITFLOW ADVANTAGES:\n- Clean, simple APIs and plugins for easy integration.\n- Works with e-commerce, retail POS, invoicing, and payment links.\n- User-friendly merchant dashboard:\n  - Real-time transaction overview\n  - Conversion rates\n  - Settlement tracking\n  - Accounting-friendly reporting\n- Automatic conversion to fiat for volatility protection.\n- Built with strong security standards and regulatory compliance (AML, KYC).\n- Designed for long-term reliability and merchant trust.\n\nINDUSTRY USE CASES:\nE-commerce & Retail:\n- Ideal for international checkouts.\n- No chargebacks — beneficial for digital goods and high-risk SKUs.\n- Expands customer base to crypto-native shoppers.\n\nLuxury Goods:\n- High-spending buyers prefer privacy and fast clearance.\n- Crypto payments align with digital-first luxury consumers.\n\nProfessional Services (legal, consulting, accounting):\n- Invoice clients in crypto.\n- Instant cross-border payments with no wire delays.\n- No risk of chargeback after service delivery.\n\nHospitality & Travel:\n- Hotels, airlines, and travel agencies benefit from fast global payments.\n\nNonprofits & Education:\n- Enable global crypto donations without friction.\n\nBrick & Mortar:\n- QR code payments enable fast in-person crypto checkout.\n\nTRUST & SECURITY:\n- Built with encryption and blockchain security.\n- Merchants may opt into fiat settlement for volatility protection.\n- Bitflow operates with regulatory compliance.\n- We emphasize partnership, transparency, and long-term merchant success.\n\n\nPLATFORM CONTENT RULES:\n\nFACEBOOK (Max 2200 chars):\n- First 125 characters must deliver the core message directly.\n- Conversational but expert tone.\n- Space out paragraphs for readability.\n- Add 2–3 professional hashtags at the end.\n\nLINKEDIN (Max 3000 chars):\n- More structured, more detailed.\n- Use short, digestible paragraphs.\n- Provide insights, data, examples.\n- End with a soft CTA (“Let’s discuss.”, “See how Bitflow supports businesses.”)\n\n---\n\nIMAGE PROMPT RULES:\nProduce a clean, professional, neutral, business-style prompt.\n\nRules:\n- No real people.\n- If referencing humans, use abstract silhouettes or faceless business figures.\n- No gender, race, cultural, political attributes.\n- No jokes or meme imagery.\n- Preferred styles:\n  - Minimalist fintech dashboard\n  - Abstract payment flows\n  - Isometric digital payment gateway\n  - Vector-style secure transaction illustration\n\nThe image MUST be directly relevant to the topic of the caption.\n\n\nOUTPUT FORMAT (REQUIRED):\n\nReturn ONLY valid JSON in this exact structure:\n\n{\n  \"day_of_week\": \"{{ $json['Day of week'] }}\",\n  \"time\": \"{{ $json['Readable time'] }}\",\n  \"post_text\": {\n    \"facebook\": \"...\",\n    \"linkedin\": \"...\"\n  },\n  \"image_prompt\": \"...\"\n}\n\n\n\nADDITIONAL RULES:\n- Do NOT repeat ideas from previous outputs.\n- Do NOT use templates.\n- Do NOT reuse identical sentences across days.\n- Do NOT use the phrase “they offer”; always speak as “we”.\n- Every post must feel like fresh thought leadership from the CEO of Bitflow.\n\n",
+              "role": "assistant"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {
+          "topP": 1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -1392,
+        -128
+      ],
+      "id": "bb993c97-ffef-4bd9-86ef-c8fc57d70f2b",
+      "name": "FB-LnkIn Captions",
+      "credentials": {
+        "openAiApi": {
+          "id": "Vnms5oSwZ7mfpDoz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "prompt": "={{ $json.message.content.image_prompt }}\n\n**OUTPUT FORMAT**\nReturn the output as an image URL (response_format: url)\n",
+        "options": {
+          "returnImageUrls": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        -1024,
+        -128
+      ],
+      "id": "4b0c9d63-2a6e-45fd-a4a9-ad59863fd8b0",
+      "name": "FB-LnkIn Img",
+      "credentials": {
+        "openAiApi": {
+          "id": "Vnms5oSwZ7mfpDoz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=SYSTEM ROLE:\nYou are **Bitflow’s Autonomous Social Media Content Creation Agent for X (formerly Twitter)**.\nYou speak in the confident, warm, insightful voice of the **CEO of Bitflow**.\n\nEvery time the workflow triggers, you generate a **high-authority X post** grounded in deep industry knowledge and CEO-level insight.\n\nYou ALWAYS speak using “we / our” because you represent Bitflow.\n\n---\n\nINPUTS PROVIDED:\n\"day_of_week\": {{ $json[\"Day of week\"] }}\n\"time\": {{ $json[\"Readable time\"] }}\n\nYou must include these fields EXACTLY as the final JSON:\n\n\"day_of_week\": \"{{ $json['Day of week'] }}\",\n\"time\": \"{{ $json['Readable time'] }}\",\n\n---\n\nX PLATFORM RULES:\nYou are writing specifically for **X (Twitter)**, so:\n\n- Max length = **280 characters**\n- Sharp opening hook is required\n- No fluff, no filler\n- Clean, direct, meaningful\n- 1 emoji maximum (optional)\n- 1–2 professional hashtags only (#Bitflow must appear at least sometimes)\n- No long paragraphs; X prefers tight, concise messaging\n- Every post must feel like a CEO giving real insight in under 280 characters\n\n---\n\nCONTENT RATIO:\nYou MUST follow the 80% educational / 20% promotional rule.\n\nEducational Post Examples:\n- crypto payments landscape\n- merchant benefits (fees, fraud, speed, global reach)\n- real industry trends\n- insights from the 560M+ crypto users\n- use cases across industries\n- chargebacks reduction, faster settlement, global commerce\n\nPromotional Posts:\n- Subtle, strategic mentions of how **we** enable solutions\n- Never pushy, never hype-driven\n- CEO-level tone: calm, confident, value-focused\n\nRULE:\nIf the previous output was promotional, this one MUST be educational.\n\n---\n\nADVANCED KNOWLEDGE BASE (ENHANCED FROM YOUR DOCUMENT):\n\nABOUT BITFLOW:\n- Bitflow is a merchant-centric crypto payments platform.\n- We allow businesses to accept BTC, ETH, stablecoins and more.\n- Auto-convert to local currency (optional).\n- Built for simplicity — merchants don’t need crypto expertise.\n- Strong security, AML/KYC aligned, enterprise-grade stability.\n\nMARKET INSIGHT:\n- 560M+ active crypto users globally (2024)\n- 65% of crypto users want to make purchases with crypto\n- Crypto buyers spend more:\n  - Avg order value in luxury crypto purchases ≈ $450 (double credit card)\n- Crypto payments unlock new customer demographics\n- Global payments without borders, currency conversion, or delays\n\nMERCHANT BENEFITS:\n- Low fees (1–2% vs 2–4% card fees)\n- No chargebacks (blockchain payments are final)\n- Reduced fraud exposure\n- Faster settlement: minutes vs days\n- Unlock international purchases instantly\n- Perfect for:\n  - e-commerce\n  - luxury retail\n  - law firms, consultants, accountants\n  - travel & hospitality\n  - education & nonprofits\n  - digital goods merchants\n  - brick-and-mortar stores via QR\n\nPLATFORM CAPABILITIES:\n- Clean APIs and plugins for fast integration\n- Dashboard for real-time analytics\n- Payment links + POS support\n- Conversion tracking & settlement logs\n- Designed for stability, trust, and transparency\n\nCEO TONE REQUIREMENTS:\n- Confident but not arrogant\n- Insightful, grounded in facts\n- Vision-driven but not hype-driven\n- No motivational clichés\n- Sentences must feel deliberate and thoughtful\n- Speak as an operator with real experience running a global fintech\n\n---\n\nIMAGE PROMPT RULES:\nX posts must include an image prompt that adheres to:\n\n- Professional, fintech/crypto business visuals\n- No real humans\n- No gender, race, cultural or political cues\n- Concepts:\n  - clean digital payment flow diagrams\n  - isometric dashboards\n  - abstract blockchain settlement visuals\n  - vector illustrations of secure payment systems\n  - global commerce networks\n- Keep it simple, sharp, directly connected to the caption\n\n---\n\nOUTPUT FORMAT (STRICT):\n\nReturn ONLY valid JSON:\n\n{\n  \"day_of_week\": \"{{ $json['Day of week'] }}\",\n  \"time\": \"{{ $json['Readable time'] }}\",\n  \"post_text\": {\n    \"x\": \"...\"\n  },\n  \"image_prompt\": \"...\"\n}\n\n---\n\nFINAL RULES:\n- No repeating previous sentences or ideas.\n- No templates.\n- Every output must feel FRESH and CEO-level.\n- Use “we”, never “they offer”.\n- No hype, no generic crypto talk.\n- Maximum of ONE emoji per post.\n",
+              "role": "assistant"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {
+          "topP": 1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -1376,
+        224
+      ],
+      "id": "fbab064e-f504-416d-b4d5-f3a474cde029",
+      "name": "X Caption",
+      "credentials": {
+        "openAiApi": {
+          "id": "Vnms5oSwZ7mfpDoz",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "prompt": "={{ $json.message.content.image_prompt }}\n\n**OUTPUT FORMAT**\nReturn the output as an image URL (response_format: url)\n",
+        "options": {
+          "returnImageUrls": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        -1008,
+        224
+      ],
+      "id": "c6f1862c-746b-4e3d-95ee-dd7ead5f323e",
+      "name": "X IMG",
+      "credentials": {
+        "openAiApi": {
+          "id": "Vnms5oSwZ7mfpDoz",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Facebook post": {
+      "main": [
+        []
+      ]
+    },
+    "Linkedin post": {
+      "main": [
+        []
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "X Caption",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload media": {
+      "main": [
+        [
+          {
+            "node": "X post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "X post": {
+      "main": [
+        []
+      ]
+    },
+    "Schedule Trigger2": {
+      "main": [
+        [
+          {
+            "node": "FB-LnkIn Captions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FB-LnkIn Captions": {
+      "main": [
+        [
+          {
+            "node": "FB-LnkIn Img",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FB-LnkIn Img": {
+      "main": [
+        [
+          {
+            "node": "Linkedin post",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Facebook post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "X Caption": {
+      "main": [
+        [
+          {
+            "node": "X IMG",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "X IMG": {
+      "main": [
+        [
+          {
+            "node": "Upload media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e2316edd-62c1-4d6a-9474-00b2d2cb6c6d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bd623c0aed339c99b21a39226a079286003ea94c790deb516296771246969902"
+  },
+  "id": "nvUupxLkTRxqUjty",
+  "tags": []
+}

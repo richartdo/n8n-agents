@@ -1,0 +1,419 @@
+{
+  "name": "X / FB automation",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1voTV2_G_KJWl1rMEvKTJ7yzSpqByZpDmRqAIS2zTSag",
+          "mode": "list",
+          "cachedResultName": "Social Media Auto Posts",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1voTV2_G_KJWl1rMEvKTJ7yzSpqByZpDmRqAIS2zTSag/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Topics",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1voTV2_G_KJWl1rMEvKTJ7yzSpqByZpDmRqAIS2zTSag/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Posted?",
+              "lookupValue": "false"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -2000,
+        896
+      ],
+      "id": "25b74452-d8bc-4427-8031-7fa4a5f97f95",
+      "name": "Get Content",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Rknw2xK65vqWPld0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2256,
+        496
+      ],
+      "id": "765716d8-9c50-49e5-a3db-472b63b6a8b6",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -752,
+        576
+      ],
+      "id": "fa9bc310-6338-4275-a64c-f9a7050c613e",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1voTV2_G_KJWl1rMEvKTJ7yzSpqByZpDmRqAIS2zTSag/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Topics",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1FTkLtCefG7Zf3-E7R7yZyRlYXOJaOJsVmYUii1Mnzlk/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Topic": "={{ $('Get Content').item.json.Topic }}",
+            "Posted?": "true"
+          },
+          "matchingColumns": [
+            "Topic"
+          ],
+          "schema": [
+            {
+              "id": "Topic",
+              "displayName": "Topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "video",
+              "displayName": "video",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Posted?",
+              "displayName": "Posted?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -592,
+        800
+      ],
+      "id": "faaff7d3-f05c-4989-880d-185eb836507d",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Rknw2xK65vqWPld0",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are the Lylop Social Media Content Creation AI — a human-sounding, brand-aligned social media copywriter for Lylop, a UK-based AI automation company helping business owners capture leads, automate client bookings, and scale without adding more people.\n\nYour job:\n- Receive a topic from the {{ $json.Topic }}.\n- Turn that topic into two ready-to-post social media captions (Facebook, X).\n- Generate a clean, minimal AI image prompt related to the topic.\n- Include relevant hashtags (3–4 only).\n\nYou write as if Lylop is talking to business owners, coaches, consultants, or agency founders — not random consumers. Always keep the tone conversational, confident, and human.\n\nFollow these detailed brand rules:\n- Human-first, clear, conversational tone.\n- Avoid hype words like “revolutionize,” “unlock,” or “empower.”\n- Use “you” and “your business,” not “users” or “clients.”\n- UK/EU business focus, global mindset.\n- Each post should sound like a tech founder explaining AI to a business owner.\n- Vary sentence length; clarity > cleverness.\n- Never sound robotic or templated.\n\nWhen the topic is vague, infer a relevant Lylop angle.\n\n---\n\n**Output Format (exact JSON):**\n{\n  \"topic\": \"{{ $json.Topic }}\",\n  \"facebook_post\": \"<50-100 words, conversational, Lylop tone>\",\n  \"x_post\": \"<max 275 characters, punchy, human, 1-2 hashtags>\",\n  \"image_prompt\": \"<minimal illustration prompt, clean UI, white background, purple/blue accents, 16:9>\",\n  \"hashtags\": [\"#Lylop\", \"#AIAutomation\", \"#VoiceAI\", \"#MAPPlatform\"]\n}\n\n---\n\n**Platform rules:**\n- Facebook: 50–100 words, “talking to you” vibe, max 3 hashtags.\n- X: ≤275 chars, short and sharp, 1–2 hashtags.\n- Image prompts should be minimal, business-themed, and visually on-brand.\n\n**Examples of image prompt style:**\n“Minimal isometric illustration of AI-powered business dashboard automating customer follow-ups, white background, purple/blue accents, professional, 16:9.”\n\nIf topic is missing, infer it as: “Daily Lylop Post – {today’s date}”.\n\n**Never output anything except the JSON.**\n**Never include markdown, explanations, or text outside the JSON block.**\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -1728,
+        624
+      ],
+      "id": "7103169e-9bbf-4ee9-8371-5ee0c2ef8d5a",
+      "name": "Captions Agent",
+      "credentials": {
+        "openAiApi": {
+          "id": "iJCJMxnaj2reN8Gx",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "prompt": "={{ $json.message.content.image_prompt }}\n\n**OUTPUT FORMAT**\nReturn the output as an image URL (response_format: url)",
+        "options": {
+          "returnImageUrls": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2,
+      "position": [
+        -1472,
+        928
+      ],
+      "id": "8b2e625f-880a-4cf0-a444-2824461250c3",
+      "name": "Generate an image",
+      "credentials": {
+        "openAiApi": {
+          "id": "iJCJMxnaj2reN8Gx",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "platform": "facebook",
+        "accountId": {
+          "__rl": true,
+          "value": "12626",
+          "mode": "list",
+          "cachedResultName": "Gary Scot Robertson",
+          "cachedResultUrl": "https://backend.blotato.com/v2/accounts/12626"
+        },
+        "postContentText": "={{ $('Captions Agent').item.json.message.content.facebook_post }}",
+        "postContentMediaUrls": "={{ $json.url }}",
+        "facebookPageId": {
+          "__rl": true,
+          "value": "106753131647879",
+          "mode": "list",
+          "cachedResultName": "LYLOP Living Your Life on Purpose",
+          "cachedResultUrl": "https://backend.blotato.com/v2/accounts/12626/subaccounts/106753131647879"
+        },
+        "options": {}
+      },
+      "type": "@blotato/n8n-nodes-blotato.blotato",
+      "typeVersion": 2,
+      "position": [
+        -1184,
+        528
+      ],
+      "id": "2c777001-bea2-4967-95a4-87b49c42e903",
+      "name": "Facebook post"
+    },
+    {
+      "parameters": {
+        "platform": "twitter",
+        "accountId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "8977"
+        },
+        "postContentText": "={{ $('Captions Agent').item.json.message.content.x_post }}",
+        "postContentMediaUrls": "={{ $json.url }}",
+        "threadInputMethod": "=",
+        "options": {}
+      },
+      "type": "@blotato/n8n-nodes-blotato.blotato",
+      "typeVersion": 2,
+      "position": [
+        -1024,
+        768
+      ],
+      "id": "45aa256a-6380-4b8b-a4bd-ca39ca2e6b61",
+      "name": "X post",
+      "retryOnFail": false,
+      "alwaysOutputData": false,
+      "credentials": {
+        "blotatoApi": {
+          "id": "Bpb92VHJ2OtaQm1l",
+          "name": "Blotato account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "media",
+        "mediaUrl": "={{ $json.url }}"
+      },
+      "type": "@blotato/n8n-nodes-blotato.blotato",
+      "typeVersion": 2,
+      "position": [
+        -848,
+        960
+      ],
+      "id": "c2b12f73-8dcb-4cd5-88d9-6815fe01f028",
+      "name": "Upload media",
+      "credentials": {
+        "blotatoApi": {
+          "id": "Bpb92VHJ2OtaQm1l",
+          "name": "Blotato account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get Content": {
+      "main": [
+        [
+          {
+            "node": "Captions Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Captions Agent": {
+      "main": [
+        [
+          {
+            "node": "Generate an image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate an image": {
+      "main": [
+        [
+          {
+            "node": "Upload media",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Facebook post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facebook post": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "X post": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Upload media": {
+      "main": [
+        [
+          {
+            "node": "X post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "113a9341-366e-45e1-9cea-7a6b7354b0f2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bd623c0aed339c99b21a39226a079286003ea94c790deb516296771246969902"
+  },
+  "id": "i8nBqdkH0n9Ttq3w",
+  "tags": []
+}
