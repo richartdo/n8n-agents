@@ -58,27 +58,12 @@ Before using these agents, make sure you have:
 
 ---
 
-## 🧩 Folder Structure
+## 🗂 Folder Structure
 
-n8n-agents/
-│
-├── agents/                     # All exported .json workflows from n8n
-│   ├── AUTO SOCIAL.json
-│   ├── Automated LinkedIn Content Creation with GPT-4 and DALL-E for Scheduled Posts.json
-│   ├── X _ FB automation.json
-│   └── ✨🤖Automate Multi-Platform Social Media Content Creation with AI.json
-│
-├── docs/                       # Documentation for each agent
-│   ├── AUTO SOCIAL.md
-│   ├── Automated LinkedIn Content Creation with GPT-4 and DALL-E for Scheduled Posts.md
-│   ├── X _ FB automation.md
-│   └── Automate Multi-Platform Social Media Content Creation with AI.md
-│
-├── assets/                     # (Optional) Screenshots, images, or flow diagrams
-│   ├── AUTO SOCIAL.png
-│   ├── LinkedIn Agent Demo.png
-│   └── Overview Diagram.png
-│
-├── README.md                   # Main repository overview and usage guide
-│
-└── LICENSE                     # (Optional) Open-source license (MIT, Apache 2.0, etc.)
+| Folder | Description |
+|---------|-------------|
+| `/agents/` | Contains all exported `.json` workflows from n8n |
+| `/docs/` | Documentation for each agent, explaining setup and credentials |
+| `/assets/` | Optional screenshots, diagrams, and visuals |
+| `README.md` | Main repository overview and usage guide |
+| `LICENSE` | Optional open-source license file |
